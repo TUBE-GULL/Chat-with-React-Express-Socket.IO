@@ -1,5 +1,8 @@
 start project 
 
+0.0.4
+
+did a couple of little things
 
 0.0.3
 

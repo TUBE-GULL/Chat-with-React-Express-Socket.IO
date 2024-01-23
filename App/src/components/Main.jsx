@@ -1,9 +1,36 @@
+import React, { useEffect } from 'react';
+import io from 'socket.io-client';
 import styles from './Main.module.scss';
+
+const socket = io('http://localhost:8080');
 
 const Main = () => {
 
+   useEffect(() => {
+
+      socket.on('connect', () => {
+         console.log('Подключено к серверу');
+      });
+
+      socket.on('disconnect', () => {
+         console.log('Отключено от сервера');
+      });
+
+      socket.on('message', (data) => {
+         console.log('Получено сообщение от сервера:', data.text);
+      });
+
+      socket.emit('message', { text: 'Привет от клиента!' });
+
+      return () => {
+         console.log('Компонент размонтирован');
+         socket.disconnect();
+      };
+   }, []);
+
+
    return (
-      <biv className={styles.Main}>
+      <div className={styles.Main}>
 
          {/* {Friend list} */}
          <header className={styles.header}>
@@ -41,7 +68,7 @@ const Main = () => {
 
             </div>
          </footer>
-      </biv>
+      </div>
    )
 }
 
