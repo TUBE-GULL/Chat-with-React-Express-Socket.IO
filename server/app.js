@@ -8,10 +8,15 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
 const PORT = process.env.PORT || 8080;
 
+app.use(express.static(getAbsolutePath('../App/dist')));
+
 app.get('/', (req, res) => {
-   res.sendFile(getAbsolutePath('../chat/index.html'));
+   res.sendFile(getAbsolutePath('../App/dist/index.html'));
 });
 
+
+console.time(' ➜ \x1b[32mServer startup time:\x1b[0m');
 server.listen(PORT, () => {
-   console.log(`Socket.IO + Start sever on port ${PORT}...`);
+   console.timeEnd(' ➜ \x1b[32mServer startup time:\x1b[0m');
+   console.log(` ➜ \x1b[32mLocal: \x1b[4mhttp://localhost:${PORT}/\x1b[0m`);
 });

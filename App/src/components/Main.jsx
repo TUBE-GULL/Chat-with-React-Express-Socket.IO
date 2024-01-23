@@ -14,7 +14,7 @@ const Main = () => {
          </header>
 
          <main className={styles.main}>
-            <h1 className={styles.mainH1}>Window-chat</h1>
+            <h1 className={styles.mainH1}>WindoW</h1>
             <div className={styles.windows_chat}>
 
                {/* {example sender} */}
