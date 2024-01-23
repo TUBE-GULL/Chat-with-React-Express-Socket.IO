@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', (socket) => {
-   console.log('User connected to the server');
+   console.log(` ➜ \x1b[32mConnect New User:${socket}\x1b[0m`);
 
    socket.on('message', (data) => {
       console.log('Message received:', data);
@@ -31,8 +31,6 @@ io.on('connection', (socket) => {
       console.log('User disconnected');
    });
 });
-
-
 
 
 
