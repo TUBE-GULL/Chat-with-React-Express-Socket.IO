@@ -1,6 +1,10 @@
 import http from 'http';
 import express from 'express';
 import { Server } from 'socket.io'
+
+//modules
+import logs from './modules/logs.js';
+import { singUp } from './modules/singUpIn.js';
 import getAbsolutePath from './modules/getAbsolutePath.js';
 
 const app = express();
@@ -18,14 +22,24 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', (socket) => {
-   console.log(` ➜ \x1b[32mConnect New User:${socket}\x1b[0m`);
+   console.log(` ➜ Connect New User: ${socket.id}`);
 
-   socket.on('message', (data) => {
-      console.log('Message received:', data);
+   socket.on('login', (data) => {
+      console.log('Login data :', data);
 
-
-      io.emit('message', { text: 'Hi from server!' });
    });
+
+   socket.on('registering', (data) => {
+      console.log('registering data :', data);
+      singUp
+   });
+
+   // socket.on('message', (data) => {
+   //    console.log('Message received:', data);
+
+
+   //    io.emit('message', { text: 'Hi from server!' });
+   // });
 
    socket.on('disconnect', () => {
       console.log('User disconnected');
@@ -39,17 +53,9 @@ io.on('connection', (socket) => {
 
 
 
-
 console.time(' ➜ \x1b[32mServer startup time:\x1b[0m');
 server.listen(PORT, () => {
-
-   console.log("         __             __     _____                              ");
-   console.log("   _____/ /_____ ______/ /_   / ___/___  ______   _____  _____    ");
-   console.log("  / ___/ __/ __ `/ ___/ __/   \\__ \\/ _ \\/ ___| | / / _ \\/ ___/    ");
-   console.log(" (__  / /_/ /_/ / /  / /_    ___/ /  __/ /   | |/ /  __/ /        ");
-   console.log("/____/\\__/\\__,_/_/   \\__/   /____/\\___/_/    |___/\\___/_/         ");
-   console.log("                                                                  ");
-
+   logs();
    console.timeEnd(' ➜ \x1b[32mServer startup time:\x1b[0m');
    console.log(` ➜ \x1b[32mLocal: \x1b[4mhttp://localhost:${PORT}/\x1b[0m`);
 });

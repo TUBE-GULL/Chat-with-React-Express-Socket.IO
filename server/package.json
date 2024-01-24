@@ -12,7 +12,9 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "create-vite": "^5.1.0",
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "socket.io": "^4.7.2"
