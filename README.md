@@ -1,5 +1,9 @@
 start project 
 
+0.0.7
+
+added function to sing Up and to sing In 
+
 0.0.6
 
 added function to sing Up and to sing In 

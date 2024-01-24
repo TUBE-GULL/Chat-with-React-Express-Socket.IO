@@ -15,6 +15,10 @@ function App() {
       console.log('connect to server!');
     });
 
+    socket.on('startMessage', (data) => {
+      console.log('start message ! )' + data)
+    })
+
     // socket.on('message', (data) => {
     //   console.log('Получено сообщение от сервера:', data.text);
     // });
@@ -22,7 +26,6 @@ function App() {
     // socket.emit('message', { text: 'Привет от клиента!' });
 
     return () => {
-      console.log('disconnect to server');
       socket.on('disconnect');
     };
   }, []);

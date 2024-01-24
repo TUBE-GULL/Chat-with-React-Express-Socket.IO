@@ -4,18 +4,19 @@ import socket from '../socket';
 
 const Login = () => {
    const [isRegistering, setIsRegistering] = useState(false);
+   const [passwordMatch, setPasswordMatch] = useState(true);
 
    const [loginFormData, setLoginFormData] = useState({
       firstName: '',
       password: '',
    });
+
    const [registeringFormData, setRegisteringFormData] = useState({
       firstName: '',
       lastName: '',
       registerPassword: '',
       confirmPassword: '',
    });
-
 
    const handleChange = (e) => {
       const { name, value } = e.target;
@@ -37,7 +38,17 @@ const Login = () => {
       e.preventDefault();
       //send data in server 
       if (isRegistering) {//registering
-         socket.emit('registering', registeringFormData);
+         if (registeringFormData.registerPassword === registeringFormData.confirmPassword) {
+            socket.emit('registering', {// if register confirm password true send data
+               firstName: registeringFormData.firstName,
+               lastName: registeringFormData.lastName,
+               password: registeringFormData.registerPassword,
+            })
+            console.log('send')
+         } else {
+            setPasswordMatch(false);
+            console.log('no send')
+         }
       } else {//Login
          socket.emit('login', loginFormData);
       }
@@ -46,6 +57,31 @@ const Login = () => {
    const handleToggleForm = () => {
       setIsRegistering((prevValue) => !prevValue);
    };
+
+   socket.on('returnRegistering', (data) => {
+      console.log(data.message); // return registering
+
+   });
+
+   socket.on('returnLogin', (data) => {
+      console.log(data.message);
+
+      data.return
+         ? setIsRegistering(true)
+         : setIsRegistering(false);
+
+      // Clear the data form after receiving income.
+      setLoginFormData({
+         firstName: '',
+         password: '',
+      });
+      setRegisteringFormData({
+         firstName: '',
+         lastName: '',
+         registerPassword: '',
+         confirmPassword: '',
+      });
+   });
 
    return (
       <div className={style.Login}>
@@ -80,6 +116,7 @@ const Login = () => {
                         value={registeringFormData.registerPassword}
                         onChange={handleChange}
                         placeholder="Register Password"
+                        className={!passwordMatch ? style.passwordMismatch : ''}
                      />
                   </label>
                   <br />
@@ -90,6 +127,7 @@ const Login = () => {
                         value={registeringFormData.confirmPassword}
                         onChange={handleChange}
                         placeholder="Confirm password"
+                        className={!passwordMatch ? style.passwordMismatch : ''}
                      />
                   </label>
                   <br />

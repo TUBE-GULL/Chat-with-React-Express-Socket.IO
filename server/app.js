@@ -4,7 +4,7 @@ import { Server } from 'socket.io'
 
 //modules
 import logs from './modules/logs.js';
-import { singUp } from './modules/singUpIn.js';
+import { singUp, singIn } from './modules/singUpIn.js'
 import getAbsolutePath from './modules/getAbsolutePath.js';
 
 const app = express();
@@ -18,25 +18,23 @@ app.get('/', (req, res) => {
    res.sendFile(getAbsolutePath('../App/dist/index.html'));
 });
 
-
-
-
 io.on('connection', (socket) => {
    console.log(` ➜ Connect New User: ${socket.id}`);
 
    socket.on('login', (data) => {
-      console.log('Login data :', data);
-
+      singIn(data)
+         ? io.emit('returnLogin', { return: 0, message: 'wrong login or password' })
+         : io.emit('startMessage', data);
    });
 
    socket.on('registering', (data) => {
-      console.log('registering data :', data);
-      singUp
+      singUp(data)
+         ? io.emit('returnLogin', { return: 0, message: 'authorization was successful' })
+         : io.emit('returnRegistering', { message: 'Failed to log in' });
    });
 
    // socket.on('message', (data) => {
    //    console.log('Message received:', data);
-
 
    //    io.emit('message', { text: 'Hi from server!' });
    // });
@@ -45,12 +43,6 @@ io.on('connection', (socket) => {
       console.log('User disconnected');
    });
 });
-
-
-
-
-
-
 
 
 console.time(' ➜ \x1b[32mServer startup time:\x1b[0m');
