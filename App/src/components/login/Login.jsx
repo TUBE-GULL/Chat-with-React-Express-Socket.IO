@@ -22,17 +22,12 @@ const Login = () => {
       const { name, value } = e.target;
 
       if (isRegistering) {
-         setRegisteringFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-         }));
+         setRegisteringFormData((prevData) => ({ ...prevData, [name]: value }));
       } else {
-         setLoginFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-         }));
+         setLoginFormData((prevData) => ({ ...prevData, [name]: value }));
       }
    };
+
 
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -44,10 +39,8 @@ const Login = () => {
                lastName: registeringFormData.lastName,
                password: registeringFormData.registerPassword,
             })
-            console.log('send')
          } else {
             setPasswordMatch(false);
-            console.log('no send')
          }
       } else {//Login
          socket.emit('login', loginFormData);

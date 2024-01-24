@@ -21,14 +21,14 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
    console.log(` ➜ Connect New User: ${socket.id}`);
 
-   socket.on('login', (data) => {
-      singIn(data)
-         ? io.emit('returnLogin', { return: 0, message: 'wrong login or password' })
-         : io.emit('startMessage', data);
+   socket.on('login', async (data) => {
+      await singIn(data)
+         ? io.emit('startMessage', data)
+         : io.emit('returnLogin', { return: 0, message: 'wrong login or password' });
    });
 
-   socket.on('registering', (data) => {
-      singUp(data)
+   socket.on('registering', async (data) => {
+      await singUp(data)
          ? io.emit('returnLogin', { return: 0, message: 'authorization was successful' })
          : io.emit('returnRegistering', { message: 'Failed to log in' });
    });

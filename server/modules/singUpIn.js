@@ -14,9 +14,9 @@ const checkUserFirstsName = (formData) => {
 };
 
 //check LastName name from data
-const checkUserLastName = (formData) => {
-   return userData.some(el => el.lastName == formData.lastName);
-};
+// const checkUserLastName = (formData) => {
+//    return userData.some(el => el.lastName == formData.lastName);
+// };
 
 //check user password from data 
 const checkUserDoubleNamePassword = async (formData) => {
@@ -29,7 +29,7 @@ const checkUserDoubleNamePassword = async (formData) => {
 
 //main function for sing Up 
 const singUp = async (formData) => {
-   if (!checkUserFirstsName(formData) && !checkUserLastName(formData)) {
+   if (!checkUserFirstsName(formData)) {//&& !checkUserLastName(formData)
       const hashedPassword = await bcrypt.hash(formData.password, 10);
       const newUser = {
          id: await tokenGeneration(10),
@@ -50,20 +50,22 @@ const singUp = async (formData) => {
 
 //main function for sing In 
 const singIn = async (formData) => {
-   if (await checkUserDoubleNamePassword(formData)) {
-      // userData.forEach(el => {
-      //    if (el.firstName === formData.firstName) {
-      //       // тут надо поработать !!!!
-      //       // что то передавть в сессию
-      //    };
-      // });
-
-      console.log('➜ Successful authentication');
-      return false;
-   } else {
-      console.log('➜ Authentication failed');
-      return true;
-   }
+   if (checkUserFirstsName(formData)) {
+      if (await checkUserDoubleNamePassword(formData)) {
+         // userData.forEach(el => {
+         //    if (el.firstName === formData.firstName) {
+         //       // тут надо поработать !!!!
+         //       // что то передавть в сессию
+         //    };
+         // });
+         console.log('➜ Successful authentication');
+         return true;
+      } else {
+         console.log('➜ Authentication failed');
+         return false;
+      }
+   };
 };
+
 
 export { singUp, singIn };
