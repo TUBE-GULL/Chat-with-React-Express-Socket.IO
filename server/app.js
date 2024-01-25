@@ -24,12 +24,12 @@ io.on('connection', (socket) => {
    socket.on('login', async (data) => {
       await singIn(data)
          ? io.emit('startMessage', data)
-         : io.emit('returnLogin', { return: 0, message: 'wrong login or password' });
+         : io.emit('returnLogin', { message: 'wrong login or password' });
    });
 
    socket.on('registering', async (data) => {
       await singUp(data)
-         ? io.emit('returnLogin', { return: 0, message: 'authorization was successful' })
+         ? io.emit('returnLogin', { message: 'authorization was successful' })
          : io.emit('returnRegistering', { message: 'Failed to log in' });
    });
 
