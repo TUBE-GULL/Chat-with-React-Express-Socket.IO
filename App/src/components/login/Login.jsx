@@ -4,9 +4,7 @@ import socket from '../socket';
 
 const Login = () => {
    const [isRegistering, setIsRegistering] = useState(false);
-   // const [passwordMatch, setPasswordMatch] = useState(true);
-   // const [loginMatch, setLoginMatch] = useState(true);
-
+   const [passwordMatch, setPasswordMatch] = useState(['Register Password:', 'Confirm  Password:']);
    const [loginFormData, setLoginFormData] = useState({
       firstName: '',
       password: '',
@@ -29,21 +27,27 @@ const Login = () => {
       }
    };
 
+   const checkSubmit = (object) => {
+      return Object.values(object).every(value => value.trim() !== '');
+   };
+
    const handleSubmit = (e) => {
       e.preventDefault();
       //send data in server 
-      if (isRegistering) {//registering
-         if (registeringFormData.registerPassword === registeringFormData.confirmPassword) {
-            socket.emit('registering', {// if register confirm password true send data
-               firstName: registeringFormData.firstName,
-               lastName: registeringFormData.lastName,
-               password: registeringFormData.registerPassword,
-            })
-         } else {
-            setPasswordMatch(false);
-         }
+      if (isRegistering) {//registering         
+         checkSubmit(registeringFormData)//check form  to blank text
+            ? (registeringFormData.registerPassword === registeringFormData.confirmPassword)
+               ? socket.emit('registering', {// if register confirm password true send data
+                  firstName: registeringFormData.firstName,
+                  lastName: registeringFormData.lastName,
+                  password: registeringFormData.registerPassword,
+               })
+               : setPasswordMatch(['Password mismatch !', 'Password mismatch !'])
+            : console.log('no text submit');
       } else {//Login
-         socket.emit('login', loginFormData);
+         checkSubmit(loginFormData) //check form  to blank text
+            ? socket.emit('login', loginFormData)
+            : console.log('no text submit')
       }
 
       //reset 
@@ -64,30 +68,22 @@ const Login = () => {
       setIsRegistering((prevValue) => !prevValue);
    };
 
-   socket.on('returnRegistering', (data) => {
-      console.log(data.message); // return registering
+   socket.on('exitLogin', (data) => {
+      setIsRegistering(!isRegistering);
 
+      //reset 
+      setLoginFormData({
+         firstName: '',
+         password: '',
+      });
+
+      setRegisteringFormData({
+         firstName: '',
+         lastName: '',
+         registerPassword: '',
+         confirmPassword: '',
+      });
    });
-
-   // socket.on('returnLogin', (data) => {
-
-   //    data.login
-   //       ? setIsRegistering(true)
-   //       : setIsRegistering(false);
-
-   //    // Clear the data form after receiving income.
-   //    setLoginFormData({
-   //       firstName: '',
-   //       password: '',
-   //    });
-
-   //    setRegisteringFormData({
-   //       firstName: '',
-   //       lastName: '',
-   //       registerPassword: '',
-   //       confirmPassword: '',
-   //    });
-   // });
 
    return (
       <div className={style.Login}>
@@ -101,8 +97,10 @@ const Login = () => {
                         name="firstName"
                         value={registeringFormData.firstName}
                         onChange={handleChange}
-                        placeholder="First Name"
-                     // className={!passwordMatch ? style.passwordMismatch : ''}
+                        placeholder="First Name:"
+                        // className={!checkSubmit(registeringFormData) && !registeringFormData.firstName.trim() ? style.error : ''}
+                        maxLength={15}
+                        minLength={3}
                      />
                   </label>
                   <br />
@@ -113,7 +111,9 @@ const Login = () => {
                         value={registeringFormData.lastName}
                         onChange={handleChange}
                         placeholder="Last Name:"
-                     // className={!passwordMatch ? style.passwordMismatch : ''}
+                        // className={!checkSubmit(registeringFormData) && !registeringFormData.firstName.trim() ? style.error : ''}
+                        maxLength={15}
+                        minLength={3}
                      />
                   </label>
                   <br />
@@ -123,8 +123,10 @@ const Login = () => {
                         name="registerPassword"
                         value={registeringFormData.registerPassword}
                         onChange={handleChange}
-                        placeholder="Register Password"
-                     // className={!passwordMatch ? style.passwordMismatch : ''}
+                        placeholder={passwordMatch[0]}
+                        // className={!checkSubmit(registeringFormData) && !registeringFormData.firstName.trim() ? style.error : ''}
+                        maxLength={15}
+                        minLength={3}
                      />
                   </label>
                   <br />
@@ -134,8 +136,10 @@ const Login = () => {
                         name="confirmPassword"
                         value={registeringFormData.confirmPassword}
                         onChange={handleChange}
-                        placeholder="Confirm password"
-                     // className={!passwordMatch ? style.passwordMismatch : ''}
+                        placeholder={passwordMatch[1]}
+                        // className={!checkSubmit(registeringFormData) && !registeringFormData.firstName.trim() ? style.error : ''}
+                        maxLength={15}
+                        minLength={3}
                      />
                   </label>
                   <br />
@@ -150,8 +154,10 @@ const Login = () => {
                         name="firstName"
                         value={loginFormData.firstName}
                         onChange={handleChange}
-                        placeholder="Your First Name"
-                     // className={!passwordMatch ? style.passwordMismatch : ''}
+                        placeholder="Your First Name:"
+                        // className={!checkSubmit(loginFormData) && !loginFormData.firstName.trim() ? style.error : ''}
+                        maxLength={15}
+                        minLength={3}
                      />
                   </label>
                   <br />
@@ -161,8 +167,10 @@ const Login = () => {
                         name="password"
                         value={loginFormData.password}
                         onChange={handleChange}
-                        placeholder=" Password"
-                     // className={!passwordMatch ? style.passwordMismatch : ''}
+                        placeholder="Password:"
+                        // className={!checkSubmit(loginFormData) && !loginFormData.firstName.trim() ? style.error : ''}
+                        maxLength={15}
+                        minLength={3}
                      />
                   </label>
                   <br />

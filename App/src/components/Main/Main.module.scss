@@ -116,8 +116,7 @@
       }
 
       .button:hover {
-         background: rgba(132, 0, 255, 0.2);
-
+         background: rgba(255, 255, 255, 0.3);
       }
    }
 }
@@ -129,6 +128,52 @@
    .favorite_friends {
       width: 100%;
       height: 100%;
+      // margin-left: 6px;
       display: flex;
+      align-items: center;
+      // justify-content: flex-end;
+      overflow-x: auto;
+      // overflow: auto;
+      // overflow: hidden;
+   }
+
+   /* Firefox */
+   .favorite_friends {
+      scrollbar-width: auto;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+   }
+
+   .favorite_friends:hover {
+      background: rgba(255, 255, 255, 0.1);
+   }
+
+   /* Chrome, Edge, and Safari */
+   // .favorite_friends::-webkit-scrollbar {
+   //    width: 2px;
+   //    height: 3px;
+   //    border-radius: 10px;
+   // }
+
+   .favorite_friends::-webkit-scrollbar {
+      width: 2px;
+      height: 3px;
+      border-radius: 10px;
+   }
+
+   .favorite_friends::-webkit-scrollbar:hover {
+      width: 2px;
+      height: 7px;
+   }
+
+   .favorite_friends::-webkit-scrollbar-track {
+      border-radius: 10px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+   }
+
+   .favorite_friends::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
    }
 }

@@ -1,5 +1,9 @@
 start project 
 
+0.0.10
+
+started making messenger
+
 0.0.9
 
 made amendments

@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "9ff41824f86b924abcd1",
+    "firstName": "Oleg",
+    "lastName": "Ivanov",
+    "password": "$2b$10$8n1KkTYFfWYA/xONwOWXau5HPp2uCiMhrLjvGMIJV2OlRU6O9km8y"
+  },
+  {
+    "id": "0e213713fc18f05701d5",
+    "firstName": "Ruslan",
+    "lastName": "Pupcin",
+    "password": "$2b$10$yfUelgdv7TlmipizZtGbA.0udeOsnXP/tiE1jrCecLvUXqjgvFNTy"
+  },
+  {
+    "id": "11db4270bb26420fc357",
+    "firstName": "Vali",
+    "lastName": "xch",
+    "password": "$2b$10$yNb7L44OcRd3FA0TCqMVW.0Qj7ZcOa7jZLTx9RXo.XXmpF42xmu3a"
+  },
+  {
+    "id": "36c0d44f46ac05fd1cc1",
+    "firstName": "FOX",
+    "lastName": "Firefox",
+    "password": "$2b$10$TgG3kQTcxXrO6LODLrtKee4YPSWVk.eVCpNzfCyyw8k.sbVX/773W"
+  },
+  {
+    "id": "0a2bcd2dbcecba2aaa37",
+    "firstName": "Fox",
+    "lastName": "123",
+    "password": "$2b$10$sW.Y5.gThfdmBAriddksF.IwIWRLIr/V/jeDrwJ.iSX3xh3jxTPF6"
+  }
+]

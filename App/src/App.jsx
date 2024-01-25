@@ -12,6 +12,7 @@ function App() {
 
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const [showLogin, setShowLogin] = useState(true);
 
   const showTemporaryNotification = (message, duration = 2000) => {
     setNotificationMessage(message);
@@ -19,8 +20,14 @@ function App() {
 
     setTimeout(() => {
       setShowNotification(false);
-      setNotificationMessage(''); // Очистите сообщение после скрытия
+      setNotificationMessage('');
     }, duration);
+  };
+
+
+  const handleStartMessage = (data) => {
+    console.log(data);
+    setShowLogin(false);
   };
 
   useEffect(() => {
@@ -29,11 +36,9 @@ function App() {
       console.log('connect to server!');
     });
 
-    socket.on('startMessage', (data) => {
-      console.log('start message ! )' + data)
-    })
+    socket.on('startMessage', handleStartMessage)
 
-    socket.on('returnLogin', (data) => {
+    socket.on('Notifications', (data) => {
       showTemporaryNotification(data.message, 10000);
     });
 
@@ -52,7 +57,8 @@ function App() {
   return (
     <>
       <Background />
-      <Login></Login>
+      {showLogin && <Login />}
+      {!showLogin && <Main />}
       {showNotification && <Notifications message={notificationMessage} />}
     </>
   )

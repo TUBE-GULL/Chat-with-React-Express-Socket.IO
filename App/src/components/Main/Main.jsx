@@ -1,6 +1,16 @@
+import './Main.scss'
 import styles from './Main.module.scss';
+import React, { useState } from 'react';
+import socket from '../socket';
+import PersonalArea from './components/PersonalArea/PersonalArea';
+
 
 const Main = () => {
+   const [userInfo, setUserInfo] = useState('')
+
+   socket.on('info', (data) => {
+      setUserInfo(data)
+   })
 
    return (
       <div className={styles.Main}>
@@ -38,7 +48,21 @@ const Main = () => {
          {/* {favorite friends} */}
          <footer className={styles.footer}>
             <div className={styles.favorite_friends}>
-
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
+               <PersonalArea data={userInfo} />
             </div>
          </footer>
       </div>

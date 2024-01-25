@@ -11,6 +11,42 @@
    backdrop-filter: blur(4.5px);
    border-radius: 10px;
    border: 1px solid rgba(255, 255, 255, 0.18);
+
+   input {
+      width: 35vh;
+      height: 3vh;
+      margin: 3px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+
+   }
+
+   input::placeholder {
+      color: rgba(49, 6, 58, 0.8);
+      ;
+   }
+
+   button {
+      width: 35vh;
+      height: 5vh;
+      margin: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4.5px);
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-weight: bold;
+   }
+
+   button:hover {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 1);
+   }
+
+   button:active {
+      background: #7303c0;
+      border: 1px solid rgba(255, 255, 255, 1);
+   }
 }
 
 .LoginForm {
@@ -22,12 +58,8 @@
 
 }
 
-.passwordMismatch {
-   color: #8c3022;
-   border: 1px solid #ff2200;
-}
 
-.loginMismatch {
+.error {
    color: #8c3022;
    border: 1px solid #ff2200;
 }
@@ -37,6 +69,11 @@
 }
 
 .h2 {
+   width: 100%;
+   position: absolute;
+   bottom: 0;
+   left: 50%;
+   transform: translateX(-50%);
    font-size: 15px;
 
    .isRegistering {
