@@ -52,12 +52,6 @@ const singUp = async (formData) => {
 const singIn = async (formData) => {
    if (checkUserFirstsName(formData)) {
       if (await checkUserDoubleNamePassword(formData)) {
-         // userData.forEach(el => {
-         //    if (el.firstName === formData.firstName) {
-         //       // тут надо поработать !!!!
-         //       // что то передавть в сессию
-         //    };
-         // });
          console.log('➜ Successful authentication');
          return true;
       } else {
