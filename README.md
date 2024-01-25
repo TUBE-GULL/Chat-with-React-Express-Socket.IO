@@ -1,9 +1,14 @@
 start project 
 
+0.0.9
+
+made amendments
+
 0.0.8
 
 I fixed the errors and now everything works fine
-
+ 
+ 
 0.0.7
 
 added function to sing Up and to sing In 
