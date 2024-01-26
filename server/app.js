@@ -21,6 +21,15 @@ app.get('/', (req, res) => {
    res.sendFile(getAbsolutePath('../App/dist/index.html'));
 });
 
+app.post('/submit_singUp', (req, res) => {
+   singUp(req, res);
+});
+
+app.post('/submit_singIn', (req, res) => {
+   singIn(req, res);
+});
+
+
 const dataMessages = [
    {
       sender: ['firstName', 'lastName'],
@@ -30,37 +39,44 @@ const dataMessages = [
    }
 ];
 
+const UsersOnline = []
+
 io.on('connection', (socket) => {
    console.log(` ➜ Connect New User: ${socket.id}`);
 
-   socket.on('login', async (data) => {
-      let dataUser = {};
-      if (await singIn(data)) {
-         userData.forEach(el => {
-            if (el.firstName === data.firstName) {
-               dataUser = {
-                  socketId: el.id,
-                  firstName: el.firstName,
-                  lastName: el.lastName,
-               };
-            }
-            socket.emit('startMessage', dataUser.socketId);
-            socket.emit('info', dataUser);
-         })
-      } else {
-         socket.emit('Notifications', { message: 'Wrong login or password' });
-      }
-   });
+   // socket.on('login', async (data) => {
+   //    let dataUser = {};
+   //    if (await singIn(data)) {
+   //       userData.forEach(el => {
+   //          if (el.firstName === data.firstName) {
+   //             dataUser = {
+   //                socketId: el.id,
+   //                firstName: el.firstName,
+   //                lastName: el.lastName,
+   //             };
+   //          }
+   //          UsersOnline.push(dataUser)
+   //          console.log(UsersOnline)
+   //          socket.emit('startMessage', dataUser.socketId);
+   //          socket.emit('info', dataUser);
+   //       })
+   //    } else {
+   //       socket.emit('Notifications', { message: 'Wrong login or password' });
+   //    }
+   // });
 
-   socket.on('registering', async (data) => {
-      console.log(data)
-      if (await singUp(data)) {
-         socket.emit('Notifications', { message: 'authorization was successful' })
-         socket.emit('exitLogin', {})
-      } else {
-         socket.emit('Notifications', { message: 'Failed to log in' });
-      }
-   });
+   // socket.on('registering', async (data) => {
+   //    console.log(data)
+   //    if (await singUp(data)) {
+   //       socket.emit('Notifications', { message: 'authorization was successful' })
+   //       socket.emit('exitLogin', {})
+   //    } else {
+   //       socket.emit('Notifications', { message: 'Failed to log in' });
+   //    }
+   // });
+
+
+
 
    // socket.on('message', (data) => {
    //    console.log('Message received:', data);

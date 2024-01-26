@@ -49,20 +49,7 @@ const Main = () => {
          <footer className={styles.footer}>
             <div className={styles.favorite_friends}>
                <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
-               <PersonalArea data={userInfo} />
+
             </div>
          </footer>
       </div>

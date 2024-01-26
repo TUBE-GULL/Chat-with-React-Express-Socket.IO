@@ -1,5 +1,10 @@
 start project 
 
+
+0.0.12
+
+client refactoring + transition from Socket.io to express for client authorization
+
 0.0.10
 
 started making messenger
