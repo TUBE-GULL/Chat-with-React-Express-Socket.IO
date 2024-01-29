@@ -1,5 +1,4 @@
 function InputModule(props) {
-   console.log(props.placeholder)
    return (<>
       <input
          type={props.type}

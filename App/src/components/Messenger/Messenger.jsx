@@ -1,16 +1,23 @@
-import './Main.scss'
-import styles from './Main.module.scss';
-import React, { useState } from 'react';
-import socket from '../socket';
+import './Messenger.scss'
+import styles from './Messenger.module.scss';
+import React, { useEffect, useState } from 'react';
 import PersonalArea from './components/PersonalArea/PersonalArea';
+
+const socket = io('http://localhost:8080', { cors: { origin: "*", methods: ["GET", "POST"] } });
 
 
 const Main = () => {
    const [userInfo, setUserInfo] = useState('')
 
-   socket.on('info', (data) => {
-      setUserInfo(data)
-   })
+   useEffect(() => {
+      // socket.on('connect', () => {
+      //     console.log('connect to server!');
+      //   });
+
+      // socket.on('startMessage', handleStartMessage);
+
+
+   }, [])
 
    return (
       <div className={styles.Main}>

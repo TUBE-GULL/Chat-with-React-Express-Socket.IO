@@ -28,7 +28,9 @@ const checkUserDoubleNamePassword = async (formData) => {
 };
 
 //main function for sing Up 
-const singUp = async (formData) => {
+const singUp = async (req, res) => {
+   const formData = req.body;
+   console.log(formData)
    if (!checkUserFirstsName(formData)) {//&& !checkUserLastName(formData)
       const hashedPassword = await bcrypt.hash(formData.password, 10);
       const newUser = {
@@ -41,22 +43,24 @@ const singUp = async (formData) => {
       await writeFileData(userData);
 
       console.log('➜ Successful Registration');
-      return true;
+      res.json({ success: true });
    } else {
       console.log('➜ Registration failed');
-      return false;
+      res.status(401).json({ success: false, error: 'This user is busy !' });
    }
 };
 
 //main function for sing In 
-const singIn = async (formData) => {
+const singIn = async (req, res) => {
+   const formData = req.body;
+   console.log(formData)
    if (checkUserFirstsName(formData)) {
       if (await checkUserDoubleNamePassword(formData)) {
          console.log('➜ Successful authentication');
-         return true;
+         res.json({ success: true })
       } else {
          console.log('➜ Authentication failed');
-         return false;
+         res.status(401).json({ success: false, error: 'Wrong login or password !' });
       }
    };
 };

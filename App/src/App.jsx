@@ -5,13 +5,12 @@ import Background from './components/Background/Background.jsx'
 //Modules from rendering list 
 import Main from './components/Messanger/Main.jsx'
 import Login from './components/authorization/Login.jsx';
-import socket from './components/socket.js';
+
 import Notifications from './components/notifications/Notifications.jsx'
 
 function App() {
 
   // const socket = io('http://localhost:8080', { cors: { origin: "*", methods: ["GET", "POST"] } });
-
 
 
   //function to change the background ================================================================
