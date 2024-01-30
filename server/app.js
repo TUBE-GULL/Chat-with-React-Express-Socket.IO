@@ -13,7 +13,9 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
 const PORT = process.env.PORT || 8080;
 
-const userData = await readFileData();
+const usersData = await readFileData();
+
+const UsersOnline = [];
 
 app.use(express.json());
 app.use(express.static(getAbsolutePath('../App/dist')));
@@ -22,14 +24,40 @@ app.get('/', (req, res) => {
    res.sendFile(getAbsolutePath('../App/dist/index.html'));
 });
 
-app.post('/submit_singIn', (req, res) => {
-   console.log('/submit_singIn')
-   singIn(req, res);
+app.post('/submit_singUp', (req, res) => {
+   singUp(req, res);
 });
 
-app.post('/submit_singUp', (req, res) => {
-   console.log('/submit_singUp')
-   singUp(req, res);
+app.post('/submit_singIn', (req, res) => {
+   singIn(req, res);
+   const formData = req.body;
+   const userData = usersData.find(el => el.firstName === formData.firstName)
+   console.log('connect:' + userData)
+
+});
+
+io.on('connection', (socket) => {
+
+   console.log('Users Online:' + UsersOnline)
+
+   UsersOnline[socket.id] = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      socketId: socket.id
+   };
+
+   //       socket.emit('userData', { user, socketId: socket.id });
+   socket.emit('userData', {
+      user: {
+         firstName: userData.firstName,
+         lastName: userData.lastName
+      }, socketId: socket.id
+   });
+
+   socket.on('disconnect', () => {
+      console.log('User disconnected');
+      delete UsersOnline[socket.id];
+   });
 });
 
 const dataMessages = [
@@ -41,55 +69,6 @@ const dataMessages = [
    }
 ];
 
-const UsersOnline = []
-
-// io.on('connection', (socket) => {
-//    console.log(` ➜ Connect New User: ${socket.id}`);
-
-//    // socket.on('login', async (data) => {
-//    //    let dataUser = {};
-//    //    if (await singIn(data)) {
-//    //       userData.forEach(el => {
-//    //          if (el.firstName === data.firstName) {
-//    //             dataUser = {
-//    //                socketId: el.id,
-//    //                firstName: el.firstName,
-//    //                lastName: el.lastName,
-//    //             };
-//    //          }
-//    //          UsersOnline.push(dataUser)
-//    //          console.log(UsersOnline)
-//    //          socket.emit('startMessage', dataUser.socketId);
-//    //          socket.emit('info', dataUser);
-//    //       })
-//    //    } else {
-//    //       socket.emit('Notifications', { message: 'Wrong login or password' });
-//    //    }
-//    // });
-
-//    // socket.on('registering', async (data) => {
-//    //    console.log(data)
-//    //    if (await singUp(data)) {
-//    //       socket.emit('Notifications', { message: 'authorization was successful' })
-//    //       socket.emit('exitLogin', {})
-//    //    } else {
-//    //       socket.emit('Notifications', { message: 'Failed to log in' });
-//    //    }
-//    // });
-
-
-
-
-//    // socket.on('message', (data) => {
-//    //    console.log('Message received:', data);
-
-//    //    io.emit('message', { text: 'Hi from server!' });
-//    // });
-
-//    socket.on('disconnect', () => {
-//       console.log('User disconnected');
-//    });
-// });
 
 console.time(' ➜ \x1b[32mServer startup time:\x1b[0m');
 server.listen(PORT, () => {
