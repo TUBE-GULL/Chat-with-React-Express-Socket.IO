@@ -1,23 +1,56 @@
 import './Messenger.scss'
 import styles from './Messenger.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { Context, useEffect, useState } from 'react';
 import PersonalArea from './components/PersonalArea/PersonalArea';
+import io from 'socket.io-client'
+import { LoginMessenger } from '../../App';
 
-const socket = io('http://localhost:8080', { cors: { origin: "*", methods: ["GET", "POST"] } });
+const Messenger = () => {
+   const { messengerFormData } = useContext(LoginMessenger);
 
+   const socket = io('http://localhost:8080', {
+      cors: { origin: "*", methods: ["GET", "POST"] },
+      reconnection: false,
+      reconnectionAttempts: 0,
+      // query: { userInfo: id }
+   });
 
-const Main = () => {
-   const [userInfo, setUserInfo] = useState('')
+   const [userInfo, setUserInfo] = useState({
+      firstName: '',
+      lastName: '',
+      id: '',
+   })
+
+   console.log(messengerFormData)
 
    useEffect(() => {
-      // socket.on('connect', () => {
-      //     console.log('connect to server!');
-      //   });
+      socket.on('testConnect', ({ message }) => {
+         console.log(message)
+      })
 
-      // socket.on('startMessage', handleStartMessage);
+      socket.on('userInfo', (user) => {
+         console.log('Получено сообщение от сервера:', user);
+         setUserInfo({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            id: user.id
+         });
+      });
 
 
-   }, [])
+      socket.on('disconnect', () => {
+         console.log('Disconnect with server');
+         // Дополнительные действия при разрыве соединения, если необходимо
+      });
+
+      // Очистка слушателя событий при размонтировании компонента
+      return () => {
+         socket.off('userInfo');
+         socket.off('testConnect');
+         socket.off('disconnect');
+      };
+   }, [socket]);
+
 
    return (
       <div className={styles.Main}>
@@ -63,4 +96,4 @@ const Main = () => {
    )
 }
 
-export default Main
+export default Messenger

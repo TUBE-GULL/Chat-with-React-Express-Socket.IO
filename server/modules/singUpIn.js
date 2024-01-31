@@ -30,7 +30,7 @@ const checkUserDoubleNamePassword = async (formData) => {
 //main function for sing Up 
 const singUp = async (req, res) => {
    const formData = req.body;
-   console.log(formData)
+   console.log('singUp')
    if (!checkUserFirstsName(formData)) {//&& !checkUserLastName(formData)
       const hashedPassword = await bcrypt.hash(formData.password, 10);
       const newUser = {
@@ -53,17 +53,19 @@ const singUp = async (req, res) => {
 //main function for sing In 
 const singIn = async (req, res) => {
    const formData = req.body;
-   console.log(formData)
+
    if (checkUserFirstsName(formData)) {
       if (await checkUserDoubleNamePassword(formData)) {
          console.log('➜ Successful authentication');
-         res.json({ success: true })
+         res.json({ success: true });
       } else {
-         console.log('➜ Authentication failed');
+         console.log('➜ Authentication failed');//here you can indicate for sure that the name is incorrect BUT I DIDN’T DO SO
          res.status(401).json({ success: false, error: 'Wrong login or password !' });
-      }
-   };
+      };
+   } else {
+      console.log('➜ Authentication failed');//here you can indicate for sure that the name is incorrect BUT I DIDN’T DO SO
+      res.status(401).json({ success: false, error: 'Wrong login or password !' });
+   }
 };
-
 
 export { singUp, singIn };

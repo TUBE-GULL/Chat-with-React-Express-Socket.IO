@@ -1,9 +1,13 @@
 import style from './Login.module.scss';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import InputModule from "./InputModule";
 import Notifications from "../notifications/Notifications";
+import io from 'socket.io-client'
+import { LoginMessenger } from '../../App';
 
 const Login = () => {
+   const { showLogin, setShowLogin } = useContext(LoginMessenger);
+   const { setMessengerFormData } = useContext(LoginMessenger);
    const [isRegistering, setIsRegistering] = useState(true);
    const [showNotification, setShowNotification] = useState(false);
    const [notificationMessage, setNotificationMessage] = useState('');
@@ -100,23 +104,27 @@ const Login = () => {
             body: JSON.stringify(formData)
          })
          const result = await response.json();
-         if (post === '/submit_singIn') {
+         if (post === '/api/submit_singIn') {
 
             if (result.error) {
                showTemporaryNotification('Wrong login or password', 5000);
             } else {
-               // тут запуск мессаджера
-
+               const socket = io('http://localhost:8080', { cors: { origin: "*", methods: ["GET", "POST"] } });
+               // socket.emit('singIn', formData);
+               setMessengerFormData(formData);
+               setShowLogin(!showLogin);
             }
+            console.time('end');
          } else {
 
             if (result.error) {
-               showTemporaryNotification('authorization was successful', 5000);
-            } else {
-               //тут смена страницы с регистраци на вход 
                showTemporaryNotification('Failed to log in', 5000);
+            } else {
+               showTemporaryNotification('authorization was successful', 5000);
                setIsRegistering(!isRegistering);
             }
+            console.time('end');
+
          }
       } catch (error) {
          console.log(error.message);
@@ -133,7 +141,7 @@ const Login = () => {
       //send data in server 
       if (isRegistering) {//sing in
          checkSubmit(loginFormData)//check form  to blank text
-            ? await sendFormToServer(loginFormData, '/submit_singIn')
+            ? await sendFormToServer(loginFormData, '/api/submit_singIn')
             : showTemporaryNotification('unfilled form ', 3000);
       } else {//sing up
          if (checkSubmit(registeringFormData)) {//check form  to blank text
@@ -146,7 +154,7 @@ const Login = () => {
                   lastName: registeringFormData.lastName,
                   password: registeringFormData.registerPassword,
                };
-               await sendFormToServer(formData, '/submit_singUp');
+               await sendFormToServer(formData, '/api/submit_singUp');
             } else {
                showTemporaryNotification('passwords don\'t match', 3000);
             };

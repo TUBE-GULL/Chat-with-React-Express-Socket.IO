@@ -10,5 +10,17 @@
     "firstName": "Oleg",
     "lastName": "Samsonov",
     "password": "$2b$10$cskRJcj6N8FNKyvtfILo3ONwuop.HrNa4sAgdkeRq3ibXHzc/REzi"
+  },
+  {
+    "id": "b72e182019395efaea09",
+    "firstName": "Fox",
+    "lastName": "123",
+    "password": "$2b$10$fYEc5rm4qPBeerlq7Nxa2uUhSIUOrXdWRGG5dBY3oHcFpwMbwckZ."
+  },
+  {
+    "id": "a19da5f71becfbfef717",
+    "firstName": "Valentina",
+    "lastName": "Valentina",
+    "password": "$2b$10$gQl0KSKLEvl3Yq8.arBUO.naIPWdWlEUWA7tRy3jj7.gLGTc6PMuG"
   }
 ]

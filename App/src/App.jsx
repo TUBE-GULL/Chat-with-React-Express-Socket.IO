@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { Context, useEffect, useState } from 'react';
 import './App.css'
 import Background from './components/Background/Background.jsx'
 
 //Modules from rendering list 
-import Main from './components/Messanger/Main.jsx'
+import Messenger from './components/Messenger/Messenger.jsx'
 import Login from './components/authorization/Login.jsx';
 
-import Notifications from './components/notifications/Notifications.jsx'
+export const LoginMessenger = React.createContext()
 
 function App() {
 
   // const socket = io('http://localhost:8080', { cors: { origin: "*", methods: ["GET", "POST"] } });
-
+  const [showLogin, setShowLogin] = useState(true);
+  const [messengerFormData, setMessengerFormData] = useState('');
 
   //function to change the background ================================================================
   // const [] = useState()
@@ -25,7 +26,7 @@ function App() {
 
   // const handleBoxShadowChange = () => {
   //   setBoxShadowFront('');
-  //   setBoxShadowBack('')
+  //   setBoxShadowBack('');
   // };
 
   // const handleBorderChange = () => {
@@ -58,14 +59,14 @@ function App() {
   //     socket.on('disconnect');
   //   };
   // }, []);
-
+  // console.log(showLogin);
 
 
   // return (
   //   <>
   //     <Background />
   //     {showLogin && <Login />}
-  //     {!showLogin && <Main />}
+  //     {!showLogin && <Messenger />}
   //     {showNotification && <Notifications message={notificationMessage} />}
   //   </>
   // )
@@ -76,9 +77,13 @@ function App() {
         boxShadowFront={boxShadowFront}
         boxShadowBack={boxShadowBack}
         border={border} />
-      <Login />
+      <LoginMessenger.Provider value={{ showLogin, setShowLogin, messengerFormData, setMessengerFormData }}>
+        {showLogin && <Login />}
+        {!showLogin && <Messenger />}
+      </LoginMessenger.Provider>
     </>
-  )
+  );
+
 }
 
 export default App

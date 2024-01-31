@@ -13,9 +13,6 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
 const PORT = process.env.PORT || 8080;
 
-const usersData = await readFileData();
-
-const UsersOnline = [];
 
 app.use(express.json());
 app.use(express.static(getAbsolutePath('../App/dist')));
@@ -29,35 +26,7 @@ app.post('/submit_singUp', (req, res) => {
 });
 
 app.post('/submit_singIn', (req, res) => {
-   singIn(req, res);
-   const formData = req.body;
-   const userData = usersData.find(el => el.firstName === formData.firstName)
-   console.log('connect:' + userData)
-
-});
-
-io.on('connection', (socket) => {
-
-   console.log('Users Online:' + UsersOnline)
-
-   UsersOnline[socket.id] = {
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      socketId: socket.id
-   };
-
-   //       socket.emit('userData', { user, socketId: socket.id });
-   socket.emit('userData', {
-      user: {
-         firstName: userData.firstName,
-         lastName: userData.lastName
-      }, socketId: socket.id
-   });
-
-   socket.on('disconnect', () => {
-      console.log('User disconnected');
-      delete UsersOnline[socket.id];
-   });
+   singIn(req, res)
 });
 
 const dataMessages = [
