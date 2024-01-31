@@ -1,55 +1,50 @@
-import './Messenger.scss'
+import './Messenger.scss';
 import styles from './Messenger.module.scss';
-import React, { Context, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PersonalArea from './components/PersonalArea/PersonalArea';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 import { LoginMessenger } from '../../App';
 
 const Messenger = () => {
    const { messengerFormData } = useContext(LoginMessenger);
-
-   const socket = io('http://localhost:8080', {
-      cors: { origin: "*", methods: ["GET", "POST"] },
-      reconnection: false,
-      reconnectionAttempts: 0,
-      // query: { userInfo: id }
-   });
-
-   const [userInfo, setUserInfo] = useState({
-      firstName: '',
-      lastName: '',
-      id: '',
-   })
-
-   console.log(messengerFormData)
-
+   const [socket, setSocket] = useState(null);
+   const [userInfo, setUserInfo] = useState([]);
+   const [usersOnline, setUsersOnline] = useState([]);
    useEffect(() => {
-      socket.on('testConnect', ({ message }) => {
-         console.log(message)
-      })
-
-      socket.on('userInfo', (user) => {
-         console.log('Получено сообщение от сервера:', user);
-         setUserInfo({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            id: user.id
-         });
+      const newSocket = io('http://localhost:8080', {
+         cors: { origin: "*", methods: ["GET", "POST"] },
+         reconnection: false,
+         reconnectionAttempts: 0,
       });
 
+      setSocket(newSocket);
 
-      socket.on('disconnect', () => {
-         console.log('Disconnect with server');
-         // Дополнительные действия при разрыве соединения, если необходимо
-      });
-
-      // Очистка слушателя событий при размонтировании компонента
-      return () => {
-         socket.off('userInfo');
-         socket.off('testConnect');
-         socket.off('disconnect');
+      const handleUsersUpdate = (usersOnline) => {
+         setUsersOnline(usersOnline);
+         console.log(usersOnline);
       };
-   }, [socket]);
+
+      const handleConnectServer = (firstName, lastName, id) => {
+         // console.log(firstName, lastName);
+         setUserInfo(firstName, lastName, id);
+      };
+
+      const handleDisconnect = () => {
+         console.log('Disconnect with server');
+      };
+
+      newSocket.on('connectServer', handleConnectServer);
+      newSocket.on('disconnect', handleDisconnect);
+      newSocket.on('usersOnline', handleUsersUpdate);
+      newSocket.emit('send-info', messengerFormData);
+
+      return () => {
+         newSocket.off('connectServer', handleConnectServer);
+         newSocket.off('usersOnline', handleUsersUpdate);
+         newSocket.off('disconnect', handleDisconnect);
+         newSocket.disconnect();
+      };
+   }, [messengerFormData]);
 
 
    return (
@@ -59,6 +54,10 @@ const Messenger = () => {
          <header className={styles.header}>
             <h1 className={styles.headerH1}>Friend list</h1>
             <div className={styles.Friend_list}>
+               {/* {usersOnline.map((user, index) => {
+                  console.log(user);
+                  // < PersonalArea key={index} data={user} />
+               })} */}
 
             </div>
          </header>
@@ -89,7 +88,6 @@ const Messenger = () => {
          <footer className={styles.footer}>
             <div className={styles.favorite_friends}>
                <PersonalArea data={userInfo} />
-
             </div>
          </footer>
       </div>

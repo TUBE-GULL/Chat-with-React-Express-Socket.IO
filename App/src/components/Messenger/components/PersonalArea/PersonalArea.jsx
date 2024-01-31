@@ -1,3 +1,5 @@
+import React from 'react';
+
 const PersonalArea = ({ data }) => {
    return (
       <div className="Profile">
@@ -9,8 +11,7 @@ const PersonalArea = ({ data }) => {
             <img src="" alt={`Img-${data.firstName}`} />
          </div>
       </div>
-   )
+   );
 }
 
-
-export default PersonalArea
+export default PersonalArea;

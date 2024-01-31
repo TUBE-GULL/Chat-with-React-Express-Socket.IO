@@ -1,5 +1,12 @@
 start project 
 
+0.0.16
+made data transfer from express to socket
+
+0.0.13-15
+
+used to connect express and socket
++fixed bugs
 
 0.0.12
 
