@@ -1,9 +1,9 @@
 chat project
 react, express, socket technologies
 
-![Image Calculator](img-git/imgFirst%20.png)
-![Image Calculator](img-git/imgSecond.png)
-![Image Calculator](img-git/imgThird.png)
+![Image ](img-git/imgFirst%20.png)
+![Image ](img-git/imgSecond.png)
+![Image ](img-git/imgThird.png)
 
 
 
