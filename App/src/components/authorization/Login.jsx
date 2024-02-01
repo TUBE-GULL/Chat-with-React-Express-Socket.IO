@@ -9,6 +9,7 @@ const Login = () => {
    const { showLogin, setShowLogin } = useContext(LoginMessenger);
    const { setMessengerFormData } = useContext(LoginMessenger);
    const [isRegistering, setIsRegistering] = useState(true);
+   const [PasswordsDoNot, setPasswordsDoNot] = useState(true);
    const [showNotification, setShowNotification] = useState(false);
    const [notificationMessage, setNotificationMessage] = useState('');
    const [loginFormData, setLoginFormData] = useState({
@@ -23,7 +24,7 @@ const Login = () => {
       confirmPassword: '',
    });
 
-   const textHTwoSignIn = ['Already have an account?', 'Sign in']
+   const textHTwoSignIn = ['Already have an account? ', 'Sign in ']
    const inputArraySignIn = [{
       type: 'text',
       name: 'firstName',
@@ -59,6 +60,7 @@ const Login = () => {
       value: registeringFormData.registerPassword,
       onChange: (e) => handleChange(e, 'registerPassword'),
       placeholder: "Register Password:",
+      className: PasswordsDoNot ? 'passwordsDoNot' : '',
    },
    {
       type: 'password',
@@ -66,6 +68,7 @@ const Login = () => {
       value: registeringFormData.confirmPassword,
       onChange: (e) => handleChange(e, 'confirmPassword'),
       placeholder: "Confirm Password:",
+      className: PasswordsDoNot ? 'passwordsDoNot' : '',
    }];
 
    const textHTwoSignUp = ['Don\'t have an account ? ', 'Register']
@@ -157,6 +160,7 @@ const Login = () => {
                await sendFormToServer(formData, '/api/submit_singUp');
             } else {
                showTemporaryNotification('passwords don\'t match', 3000);
+               setPasswordsDoNot(!PasswordsDoNot)
             };
          } else {
             showTemporaryNotification('unfilled form', 3000);
@@ -177,28 +181,30 @@ const Login = () => {
    };
 
    return (
-      <div className={style.Login}>
-         <form className={style.LoginForm} onSubmit={handleSubmit}>
-            <div>
-               <h1 className={style.h1}>{isRegistering ? 'ACCOUNT SIGN IN' : 'CREATE AN ACCOUNT'}</h1>
-               {isRegistering
-                  ? inputArraySignIn.map((el, index) => (
-                     <InputModule key={index} {...el} />
-                  ))
-                  : inputArraySignUp.map((el, index) => (
-                     <InputModule key={index} {...el} />
-                  ))}
-               <button type="submit">{isRegistering ? 'SIGN IN' : 'CREATE ACCOUNT'}</button>
-            </div>
-            <h2 className={style.h2}>
-               {isRegistering ? textHTwoSignIn[0] : textHTwoSignUp[0]}
-               <a className={style.isRegistering} onClick={handleToggleForm}>
-                  {isRegistering ? textHTwoSignIn[1] : textHTwoSignUp[1]}
-               </a>
-            </h2>
-         </form>
+      <div className={style.Main}>
+         <div className={style.Login}>
+            <form onSubmit={handleSubmit} className={style.LoginForm} >
+               <div className={style.LoginInside}>
+                  <h1 className={style.h1}>{isRegistering ? 'ACCOUNT SIGN IN' : 'CREATE AN ACCOUNT'}</h1>
+                  {isRegistering
+                     ? inputArraySignIn.map((el, index) => (
+                        <InputModule key={index} {...el} />
+                     ))
+                     : inputArraySignUp.map((el, index) => (
+                        <InputModule key={index} {...el} />
+                     ))}
+                  <button type="submit">{isRegistering ? 'SIGN IN' : 'CREATE ACCOUNT'}</button>
+               </div>
+               <h2 className={style.h2}>
+                  {isRegistering ? textHTwoSignIn[0] : textHTwoSignUp[0]}
+                  <a className={style.isRegistering} onClick={handleToggleForm}>
+                     {isRegistering ? textHTwoSignIn[1] : textHTwoSignUp[1]}
+                  </a>
+               </h2>
+            </form>
+         </div>
          {showNotification && <Notifications message={notificationMessage} />}
-      </div>
+      </div >
    );
 };
 

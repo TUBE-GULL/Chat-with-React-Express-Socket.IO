@@ -1,0 +1,40 @@
+   .sender,
+   .recipient {
+      min-width: 20%;
+      padding: 0 20px;
+      margin: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+
+      .messageName {
+         display: flex;
+
+         h1 {
+            margin-right: 13px;
+         }
+      }
+
+      p {
+         text-align: center;
+         background: rgba(255, 255, 255, 0.2);
+         border-radius: 3px;
+         font-size: 18px;
+         padding: 0;
+         margin: 0;
+      }
+
+      h3 {
+         text-align: right;
+         padding: 0;
+         margin: 0;
+      }
+   }
+
+   .sender {
+      align-self: flex-start;
+   }
+
+   .recipient {
+      align-self: flex-end;
+   }

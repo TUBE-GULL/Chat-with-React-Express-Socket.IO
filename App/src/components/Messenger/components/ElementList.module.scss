@@ -1,0 +1,39 @@
+.User {
+   height: 10%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 5px;
+   padding: 0 10px;
+   background: rgba(255, 255, 255, 0.1);
+   border-radius: 2px;
+   border: 1px solid rgba(255, 255, 255, 0.18);
+   transition: transform 0.2s;
+
+   h1 {
+      font-size: 20px;
+   }
+
+   h2 {
+      font-size: 15px;
+   }
+
+   .Img {
+      width: 70px;
+      height: 70px;
+      border-radius: 35px;
+      background: rgba(143, 14, 14, 0.1);
+      font-size: 10px;
+
+      img {
+         width: 70px;
+         height: 70px;
+      }
+   }
+
+}
+
+.User:hover {
+   background: rgba(255, 255, 255, 0.3);
+
+}

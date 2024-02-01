@@ -1,6 +1,7 @@
 import http from 'http';
 import express from 'express';
 import { Server } from 'socket.io'
+
 //modules
 import logs from './modules/logs.js';
 import { singUp, singIn } from './modules/singUpIn.js'
@@ -32,17 +33,25 @@ const UsersOnline = {};
 io.on('connection', (socket) => {
 
    socket.on('send-info', async messengerFormData => {
-      // console.log(messengerFormData);
+      console.log(messengerFormData);
       const userData = await readFileData();
       const user = userData.find(el => el.firstName === messengerFormData.firstName);
       socket.emit('connectServer', { firstName: user.firstName, lastName: user.lastName, id: user.id });
 
       UsersOnline[socket.id] = { firstName: user.firstName, lastName: user.lastName };
-      console.log(UsersOnline);
-      socket.emit('usersOnline', UsersOnline);
+
+      io.emit('usersOnline', UsersOnline);
    });
 
-   // Слушаем событие 'disconnect' от клиента
+   socket.on('sendMessage', message => {
+      const exportMessage = message;
+      exportMessage.time = new Date().toLocaleTimeString();
+      console.log('Received message:', exportMessage);
+
+      io.emit('sendEveryoneMessage', exportMessage);
+
+   });
+
    socket.on('disconnect', () => {
       console.log('User disconnected' + socket.id);
       delete UsersOnline[socket.id];
@@ -51,14 +60,14 @@ io.on('connection', (socket) => {
    });
 });
 
-const dataMessages = [
-   {
-      sender: ['firstName', 'lastName'],
-      message: 'text',
-      time: '22:22'
-      // getFormattedDateTime()
-   }
-];
+// const dataMessages = [
+//    {
+//       sender: ['firstName', 'lastName'],
+//       message: 'text',
+//       time: '22:22'
+//       // getFormattedDateTime()
+//    }
+// ];
 
 console.time(' ➜ \x1b[32mServer startup time:\x1b[0m');
 server.listen(PORT, () => {

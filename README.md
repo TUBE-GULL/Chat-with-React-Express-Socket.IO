@@ -1,4 +1,19 @@
+![Image Calculator](img-git/imgFirst%20.png)
+![Image Calculator](img-git/imgFirst%20.png)
+![Image Calculator](img-git/imgFirst%20.png)
+
+
+chat project
+react, express, socket technologies
+
+
+
+
 start project 
+
+0.0.17
+
+the project is ready
 
 0.0.16
 made data transfer from express to socket

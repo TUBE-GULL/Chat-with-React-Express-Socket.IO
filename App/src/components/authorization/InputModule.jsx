@@ -9,6 +9,7 @@ function InputModule(props) {
          // className={!checkSubmit(loginFormData) && !loginFormData.firstName.trim() ? style.error : ''}
          maxLength='15'
          minLength='3'
+         required
       />
    </>
    )

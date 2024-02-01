@@ -1,31 +1,38 @@
 .Main {
-   width: 60%;
-   height: 95%;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   z-index: 1;
+   width: 100%;
+   height: 100vh;
+   max-width: 100%;
+   max-height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 
-   background: rgba(255, 255, 255, 0.1);
-   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-   backdrop-filter: blur(4.5px);
-   -webkit-backdrop-filter: blur(4.5px);
-   border-radius: 10px;
-   border: 1px solid rgba(255, 255, 255, 0.18);
+   .container {
+      width: 70%;
+      height: 90%;
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4.5px);
+      -webkit-backdrop-filter: blur(4.5px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+   }
+}
 
-   display: grid;
-   grid-template-columns: 0.7fr repeat(2, 1fr);
-   grid-template-rows: repeat(2, 1fr) 0.2fr;
-   grid-column-gap: 15px;
-   grid-row-gap: 15px;
-   padding: 10px;
+.header {
+   width: 30%;
+   margin: 1% 0 1% 1%;
+}
+
+.main {
+   width: 80%;
+   margin: 1%;
+   padding-bottom: 15px;
 }
 
 .header,
-.main,
-.footer {
-   font-size: 16px;
+.main {
    background: rgba(255, 255, 255, 0.1);
    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.01);
    backdrop-filter: blur(0px);
@@ -34,146 +41,69 @@
    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-//Friend list
-.header {
-   grid-area: 1 / 1 / 3 / 2;
-   margin: 0;
-   padding: 0;
+.mainH1,
+.headerH1 {
+   width: 100%;
+   height: 5%;
+   margin: 10px;
+   text-align: center;
+   font-size: 1.4rem;
+}
 
-   .headerH1 {
-      width: 90%;
-      height: 5%;
-      font-size: 16px;
-      text-align: center;
-      margin: 0;
+.windows_chat {
+   width: 100%;
+   height: 88%;
+   overflow-y: auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   font-size: 10px;
+
+
+   .sender {
+      align-self: flex-start;
+      margin: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
    }
 
-   .Friend_list {
-      width: 93%;
-      height: 93%;
-      margin: 0 auto;
-      overflow-y: auto;
-      font-size: 10px;
-
+   .recipient {
+      align-self: flex-end;
+      margin: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
    }
 }
 
-.main {
-   grid-area: 1 / 2 / 3 / 4;
-
-   .mainH1 {
-      width: 100%;
-      height: 5%;
-      margin: 0;
-      text-align: center;
-      font-size: 20px;
-   }
-
-   .windows_chat {
-      width: 100%;
-      height: 88%;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      font-size: 10px;
-
-
-      .sender {
-         align-self: flex-start;
-         margin: 5px;
-         background: rgba(255, 255, 255, 0.1);
-         border-radius: 2px;
-         border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-
-      .recipient {
-         align-self: flex-end;
-         margin: 5px;
-         background: rgba(255, 255, 255, 0.1);
-         border-radius: 2px;
-         border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-   }
-
-   .form {
-      width: 100%;
-      height: 7%;
-      text-align: center;
-
-      .input {
-         width: 80%;
-         background: rgba(255, 255, 255, 0.1);
-         border-radius: 2px;
-         border: 1px solid rgba(255, 255, 255, 0.18);
-
-      }
-
-      .button {
-         background: rgba(255, 255, 255, 0.1);
-         border-radius: 2px;
-         border: 1px solid rgba(255, 255, 255, 0.18);
-      }
-
-      .button:hover {
-         background: rgba(255, 255, 255, 0.3);
-      }
-   }
+.windows_chat {
+   width: 90%;
+   margin: 0 auto;
 }
 
-//favorite friends
-.footer {
-   grid-area: 3 / 1 / 4 / 4;
+.form {
+   width: 100%;
+   height: 10%;
+   text-align: center;
 
-   .favorite_friends {
-      width: 100%;
-      height: 100%;
-      // margin-left: 6px;
-      display: flex;
-      align-items: center;
-      // justify-content: flex-end;
-      overflow-x: auto;
-      // overflow: auto;
-      // overflow: hidden;
-   }
-
-   /* Firefox */
-   .favorite_friends {
-      scrollbar-width: auto;
+   .input {
+      width: 80%;
+      height: 35px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
    }
 
-   .favorite_friends:hover {
+   .button {
+      width: 10%;
+      height: 39px;
       background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
    }
 
-   /* Chrome, Edge, and Safari */
-   // .favorite_friends::-webkit-scrollbar {
-   //    width: 2px;
-   //    height: 3px;
-   //    border-radius: 10px;
-   // }
-
-   .favorite_friends::-webkit-scrollbar {
-      width: 2px;
-      height: 3px;
-      border-radius: 10px;
-   }
-
-   .favorite_friends::-webkit-scrollbar:hover {
-      width: 2px;
-      height: 7px;
-   }
-
-   .favorite_friends::-webkit-scrollbar-track {
-      border-radius: 10px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.1);
-   }
-
-   .favorite_friends::-webkit-scrollbar-thumb {
+   .button:hover {
       background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
    }
 }
