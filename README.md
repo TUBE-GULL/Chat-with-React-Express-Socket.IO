@@ -1,6 +1,6 @@
 ![Image Calculator](img-git/imgFirst%20.png)
-![Image Calculator](img-git/imgFirst%20.png)
-![Image Calculator](img-git/imgFirst%20.png)
+![Image Calculator](img-git/imgSecond%20.png)
+![Image Calculator](img-git/imgThird%20.png)
 
 
 chat project
